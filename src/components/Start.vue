@@ -1,7 +1,9 @@
 <template>
   <div class="weather">
     <!-- display weather here -->
-    
+    <h1 v-if="city !== '' && state !== ''">Location: {{ city }}, {{ state }}</h1>
+    <h1 v-if="currentTemp !== ''">Current Temp: {{ currentTemp }}°</h1>
+
     <input 
       v-model="zipCode" 
       type="text" 
@@ -9,13 +11,13 @@
       placeholder="Location Search"
       @input="updateZipCode">
     <!-- buttons can be useful for testing / debugging -->
-    <button @click="getWeather">Refresh Weather</button>
+    <!-- <button @click="getWeather">Refresh Weather</button> -->
     <button @click="updateZipCode">Lookup ZipCode</button>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'Start',
@@ -24,9 +26,8 @@ export default {
       zipCode: ''
     }
   },
-  computed: {
-    // map state from vuex here using mapState
-  },
+  computed:
+    mapState(['weather', 'currentTemp', 'state', 'city']),
   methods: {
     updateZipCode () {
       console.log('updateZipCode', this.zipCode)
